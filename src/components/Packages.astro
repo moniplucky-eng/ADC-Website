@@ -1,0 +1,367 @@
+---
+/* Packages.astro
+   21st.dev pattern: pricing card trio — featured center card elevated with
+   navy bg + pulsing amber border. Native <details> FAQ accordion below.
+*/
+
+const tiers = [
+  {
+    tier: "Tier 1",
+    name: "The Base",
+    tagline: "Brand new businesses & sole traders",
+    price: "299",
+    setup: "Or $149 setup + $199/month",
+    featured: false,
+    ctaLabel: "Get Started",
+    ctaClass: "btn-ghost",
+    features: [
+      "ABN & ASIC business name registration guidance",
+      ".com.au domain procurement & management",
+      "Professional business email (up to 2 accounts)",
+      "Social media handle security (FB, IG, LinkedIn)",
+      "3-page mobile-optimised website",
+      "Business banking referral & account setup support",
+      "30-day email support",
+    ],
+  },
+  {
+    tier: "Tier 2",
+    name: "The Fort",
+    tagline: "Established small businesses",
+    price: "799",
+    setup: null,
+    featured: true,
+    badge: "Most Popular",
+    ctaLabel: "Get Started",
+    ctaClass: "btn-primary",
+    features: [
+      "Everything in The Base",
+      "24/7 endpoint monitoring (up to 10 devices)",
+      "Business-grade Wi-Fi assessment & configuration",
+      "Cloud migration to Australian data centre",
+      "Managed daily backups with 30-day retention",
+      "ACSC Essential Eight Phase 1",
+      "Monthly IT health report",
+      "Priority helpdesk — 4-hour response SLA",
+    ],
+  },
+  {
+    tier: "Tier 3",
+    name: "Command Centre",
+    tagline: "Growth-stage businesses ready to scale",
+    price: "1,799",
+    setup: null,
+    featured: false,
+    ctaLabel: "Get Started",
+    ctaClass: "btn-navy",
+    features: [
+      "Everything in The Fort",
+      "AI agent deployment: 1 custom workflow automated",
+      "Full ACSC Essential Eight compliance assessment",
+      "SD-WAN failover & secure VPN setup",
+      "Quarterly cybersecurity review",
+      "Australian Privacy Act compliance check",
+      "Dedicated account manager",
+      "Monthly strategy session (1 hour)",
+    ],
+  },
+];
+
+const faqs = [
+  {
+    q: "Is there a lock-in contract?",
+    a: "No. All ADC packages are month-to-month. We earn your business every month.",
+  },
+  {
+    q: "Can I upgrade between tiers?",
+    a: "Absolutely. You can upgrade at any time and we'll pro-rate your billing accordingly.",
+  },
+  {
+    q: "Where is my data hosted?",
+    a: "All data is hosted in Australian data centres — Azure Australia East or AWS ap-southeast-2. It never leaves Australian shores.",
+  },
+  {
+    q: "What does the free Digital Health Check involve?",
+    a: "We review your current digital setup — website, email, security posture, and IT infrastructure — and give you an honest assessment with a recommended package. No obligation.",
+  },
+];
+---
+
+<section class="packages" id="packages">
+  <div class="container">
+
+    <!-- Header -->
+    <div class="packages-header fade-up">
+      <span class="section-label">Pricing</span>
+      <h2 class="packages-heading">
+        Simple, honest pricing<br/><em>for every stage.</em>
+      </h2>
+      <p class="packages-sub">
+        No lock-in surprises. Upgrade whenever you're ready.
+      </p>
+    </div>
+
+    <!-- Pricing grid -->
+    <div class="pricing-grid">
+      {tiers.map((tier, i) => (
+        <article
+          class={`pricing-card fade-up ${tier.featured ? 'pricing-card--featured' : ''}`}
+          style={`transition-delay: ${i * 0.1}s`}
+        >
+          {tier.badge && (
+            <div class="pricing-badge">{tier.badge}</div>
+          )}
+
+          <div class="pricing-tier">{tier.tier}</div>
+          <div class="pricing-name">{tier.name}</div>
+          <div class="pricing-tagline">{tier.tagline}</div>
+
+          <div class="pricing-price">
+            <span class="pricing-currency">$</span>
+            <span class="pricing-amount">{tier.price}</span>
+            <span class="pricing-period">/mo</span>
+          </div>
+          {tier.setup
+            ? <div class="pricing-setup">{tier.setup}</div>
+            : <div class="pricing-setup">&nbsp;</div>
+          }
+
+          <div class="pricing-divider"></div>
+
+          <ul class="pricing-features" role="list">
+            {tier.features.map(f => (
+              <li class="pricing-feature">
+                <span class="pricing-check" aria-hidden="true">
+                  <svg viewBox="0 0 10 10" fill="none">
+                    <path d="M2 5l2.5 2.5L8 3" stroke="currentColor" stroke-width="1.5"
+                          stroke-linecap="round" stroke-linejoin="round"/>
+                  </svg>
+                </span>
+                {f}
+              </li>
+            ))}
+          </ul>
+
+          <div class="pricing-cta">
+            <a href="#contact" class={`btn ${tier.ctaClass}`}>{tier.ctaLabel}</a>
+          </div>
+        </article>
+      ))}
+    </div>
+
+    <!-- FAQ accordion -->
+    <div class="faq fade-up">
+      <h3 class="faq-heading">Common questions</h3>
+      <div class="faq-list">
+        {faqs.map((item, i) => (
+          <details class="faq-item" name="faq">
+            <summary class="faq-question">
+              <span>{item.q}</span>
+              <span class="faq-chevron" aria-hidden="true">
+                <svg viewBox="0 0 16 16" fill="none">
+                  <path d="M4 6l4 4 4-4" stroke="currentColor" stroke-width="1.5"
+                        stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+              </span>
+            </summary>
+            <div class="faq-answer">{item.a}</div>
+          </details>
+        ))}
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<style>
+  /* ── Section ───────────────────────────────────────────── */
+  .packages {
+    padding: 120px 0 80px;
+    background: var(--white);
+  }
+
+  /* ── Header ────────────────────────────────────────────── */
+  .packages-header {
+    text-align: center;
+    margin-bottom: 72px;
+  }
+  .packages-header .section-label { display: flex; margin: 0 auto 20px; }
+  .packages-heading {
+    font-family: var(--font-display); font-weight: 900;
+    font-size: clamp(30px, 3.5vw, 52px);
+    line-height: 1.1; color: var(--navy);
+    margin-bottom: 16px;
+  }
+  .packages-heading em { color: var(--amber); font-style: italic; }
+  .packages-sub {
+    font-size: 18px; color: var(--text-muted);
+    max-width: 440px; margin: 0 auto; line-height: 1.7;
+  }
+
+  /* ── Pricing grid ──────────────────────────────────────── */
+  .pricing-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 20px;
+    align-items: start;
+    margin-bottom: 80px;
+  }
+
+  /* ── Base card ─────────────────────────────────────────── */
+  .pricing-card {
+    background: var(--white);
+    border: 1.5px solid var(--mist);
+    border-radius: var(--radius-lg);
+    padding: 36px;
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    transition: box-shadow 0.28s var(--ease),
+                border-color 0.28s var(--ease),
+                transform 0.28s var(--ease);
+  }
+  .pricing-card:not(.pricing-card--featured):hover {
+    box-shadow: var(--shadow-hover);
+    border-color: rgba(245,155,0,0.3);
+    transform: translateY(-3px);
+  }
+
+  /* ── Featured card ─────────────────────────────────────── */
+  .pricing-card--featured {
+    background: var(--navy);
+    border-color: var(--navy);
+    /* Pulsing amber glow border */
+    box-shadow: 0 0 0 0 rgba(245,155,0,0.3);
+    animation: featuredPulse 3s ease-in-out infinite;
+    transform: translateY(-8px); /* slight elevation */
+  }
+  @keyframes featuredPulse {
+    0%, 100% { box-shadow: 0 0 0 0 rgba(245,155,0,0.3); }
+    50%       { box-shadow: 0 0 0 8px rgba(245,155,0,0); }
+  }
+
+  /* Invert text on featured card */
+  .pricing-card--featured .pricing-tier    { color: var(--amber); }
+  .pricing-card--featured .pricing-name    { color: var(--white); }
+  .pricing-card--featured .pricing-tagline { color: rgba(255,255,255,0.5); }
+  .pricing-card--featured .pricing-amount,
+  .pricing-card--featured .pricing-currency { color: var(--amber); }
+  .pricing-card--featured .pricing-period,
+  .pricing-card--featured .pricing-setup   { color: rgba(255,255,255,0.4); }
+  .pricing-card--featured .pricing-divider { background: rgba(255,255,255,0.1); }
+  .pricing-card--featured .pricing-feature { color: rgba(255,255,255,0.8); }
+  .pricing-card--featured .pricing-check   { background: rgba(245,155,0,0.2); }
+
+  /* ── Card content ──────────────────────────────────────── */
+  .pricing-badge {
+    display: inline-flex; align-items: center;
+    background: var(--amber); color: var(--navy);
+    font-size: 10px; font-weight: 700;
+    letter-spacing: 0.12em; text-transform: uppercase;
+    padding: 5px 12px; border-radius: var(--radius-pill);
+    margin-bottom: 18px; width: fit-content;
+  }
+  .pricing-tier {
+    font-size: 10px; font-weight: 700; letter-spacing: 0.12em;
+    text-transform: uppercase; color: var(--amber); margin-bottom: 6px;
+  }
+  .pricing-name {
+    font-family: var(--font-display); font-size: 26px; font-weight: 900;
+    color: var(--navy); margin-bottom: 6px;
+  }
+  .pricing-tagline {
+    font-size: 13px; color: var(--text-muted); margin-bottom: 20px;
+    line-height: 1.5;
+  }
+  .pricing-price {
+    display: flex; align-items: baseline; gap: 2px; margin-bottom: 4px;
+  }
+  .pricing-currency {
+    font-family: var(--font-display); font-size: 22px; font-weight: 700;
+    color: var(--navy);
+  }
+  .pricing-amount {
+    font-family: var(--font-display); font-size: 46px; font-weight: 900;
+    color: var(--navy); line-height: 1;
+  }
+  .pricing-period { font-size: 15px; color: var(--text-muted); }
+  .pricing-setup  { font-size: 11px; color: var(--text-muted); min-height: 17px; margin-bottom: 4px; }
+
+  .pricing-divider { height: 1px; background: var(--mist); margin: 22px 0; }
+
+  .pricing-features {
+    display: flex; flex-direction: column; gap: 10px;
+    margin-bottom: 28px; flex: 1;
+  }
+  .pricing-feature {
+    display: flex; align-items: flex-start; gap: 10px;
+    font-size: 13px; color: var(--text-body); line-height: 1.5;
+  }
+  .pricing-check {
+    width: 18px; height: 18px; border-radius: 50%;
+    background: rgba(245,155,0,0.12);
+    display: flex; align-items: center; justify-content: center;
+    flex-shrink: 0; margin-top: 1px;
+  }
+  .pricing-check svg { width: 10px; height: 10px; color: var(--amber); }
+
+  .pricing-cta .btn { width: 100%; justify-content: center; }
+
+  /* ── FAQ ───────────────────────────────────────────────── */
+  .faq {
+    max-width: 720px; margin: 0 auto;
+  }
+  .faq-heading {
+    font-family: var(--font-display); font-size: 28px; font-weight: 700;
+    color: var(--navy); text-align: center; margin-bottom: 36px;
+  }
+  .faq-list {
+    border: 1.5px solid var(--mist);
+    border-radius: 20px; overflow: hidden;
+  }
+
+  /* Native details/summary accordion */
+  .faq-item {
+    border-bottom: 1px solid var(--mist);
+  }
+  .faq-item:last-child { border-bottom: none; }
+
+  .faq-question {
+    display: flex; align-items: center;
+    justify-content: space-between; gap: 16px;
+    padding: 22px 26px; cursor: pointer;
+    font-weight: 600; font-size: 15px; color: var(--navy);
+    list-style: none; /* hide native marker */
+    transition: background 0.2s;
+    user-select: none;
+  }
+  .faq-question::-webkit-details-marker { display: none; }
+  .faq-question:hover { background: var(--off-white); }
+
+  .faq-chevron {
+    width: 20px; height: 20px; flex-shrink: 0; color: var(--text-muted);
+    transition: transform 0.3s var(--ease);
+  }
+  .faq-chevron svg { width: 100%; height: 100%; }
+  details[open] .faq-chevron { transform: rotate(180deg); }
+
+  .faq-answer {
+    padding: 0 26px 22px;
+    font-size: 14px; color: var(--text-muted); line-height: 1.75;
+  }
+
+  /* ── Responsive ────────────────────────────────────────── */
+  @media (max-width: 1024px) {
+    .pricing-grid {
+      grid-template-columns: 1fr;
+      max-width: 480px; margin-left: auto; margin-right: auto;
+    }
+    .pricing-card--featured { transform: none; }
+  }
+  @media (max-width: 640px) {
+    .packages { padding: 80px 0 60px; }
+    .pricing-card { padding: 28px; }
+    .faq-question { padding: 18px 20px; font-size: 14px; }
+    .faq-answer   { padding: 0 20px 18px; }
+  }
+</style>

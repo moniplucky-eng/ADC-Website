@@ -1,0 +1,439 @@
+---
+/* Contact.astro
+   21st.dev pattern: split contact layout — trust info + next-steps
+   timeline left, floating-label form card right. Amber focus rings,
+   navy submit button, form fields with smooth focus transitions.
+*/
+
+const nextSteps = [
+  {
+    num: "01",
+    title: "We review your enquiry",
+    desc: "Within 4 business hours, a senior ADC team member reads your message personally.",
+  },
+  {
+    num: "02",
+    title: "Free Digital Health Check",
+    desc: "We book a no-obligation call to audit your current setup and recommend the right fit.",
+  },
+  {
+    num: "03",
+    title: "Tailored proposal delivered",
+    desc: "You receive a clear, itemised proposal. No lock-in. No surprises. Just honest pricing.",
+  },
+];
+
+const contactDetails = [
+  {
+    icon: `<svg viewBox="0 0 24 24" fill="none"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07A19.5 19.5 0 013.07 11a19.79 19.79 0 01-3-8.6A2 2 0 012.03 0h3a2 2 0 012 1.72 12.84 12.84 0 00.7 2.81 2 2 0 01-.45 2.11L6.09 7.91a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45 12.84 12.84 0 002.81.7A2 2 0 0122 14v2.92z" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>`,
+    label: "Phone",
+    value: "1300 ADC AUS",
+    href: "tel:1300232287",
+  },
+  {
+    icon: `<svg viewBox="0 0 24 24" fill="none"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/><path d="M22 6l-10 7L2 6" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>`,
+    label: "Email",
+    value: "hello@australiadigital.center",
+    href: "mailto:hello@australiadigital.center",
+  },
+  {
+    icon: `<svg viewBox="0 0 24 24" fill="none"><path d="M21 10c0 7-9 13-9 13S3 17 3 10a9 9 0 0118 0z" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/><circle cx="12" cy="10" r="3" stroke="currentColor" stroke-width="1.5"/></svg>`,
+    label: "Location",
+    value: "Sydney, NSW — serving all of Australia",
+    href: null,
+  },
+];
+---
+
+<section class="contact" id="contact">
+  <div class="container">
+
+    <!-- Header -->
+    <div class="contact-header fade-up">
+      <span class="section-label">Get in Touch</span>
+      <h2 class="contact-heading">
+        Let's build your<br/><em>digital foundation.</em>
+      </h2>
+    </div>
+
+    <div class="contact-layout">
+
+      <!-- LEFT: trust + next steps -->
+      <div class="contact-left fade-up">
+
+        <!-- Contact details -->
+        <div class="contact-details">
+          {contactDetails.map(d => (
+            <div class="contact-detail">
+              <div class="contact-detail-icon" aria-hidden="true">
+                <Fragment set:html={d.icon} />
+              </div>
+              <div class="contact-detail-body">
+                <div class="contact-detail-label">{d.label}</div>
+                {d.href
+                  ? <a href={d.href} class="contact-detail-value contact-detail-link">{d.value}</a>
+                  : <div class="contact-detail-value">{d.value}</div>
+                }
+              </div>
+            </div>
+          ))}
+        </div>
+
+        <!-- Divider -->
+        <div class="contact-divider"></div>
+
+        <!-- What happens next -->
+        <div class="next-steps">
+          <div class="next-steps-label">What happens next</div>
+          {nextSteps.map((step, i) => (
+            <div class="next-step">
+              <div class="next-step-num">{step.num}</div>
+              <div class="next-step-body">
+                <div class="next-step-title">{step.title}</div>
+                <div class="next-step-desc">{step.desc}</div>
+              </div>
+              {i < nextSteps.length - 1 && (
+                <div class="next-step-connector" aria-hidden="true"></div>
+              )}
+            </div>
+          ))}
+        </div>
+
+      </div>
+
+      <!-- RIGHT: form card -->
+      <div class="contact-right fade-up fade-up--delay">
+        <div class="contact-form-card">
+
+          <form class="contact-form" name="contact" method="POST" novalidate>
+
+            <div class="form-row">
+              <div class="form-group">
+                <input
+                  type="text" id="fname" name="firstName"
+                  class="form-input" placeholder=" " required autocomplete="given-name"
+                />
+                <label for="fname" class="form-label">First name *</label>
+              </div>
+              <div class="form-group">
+                <input
+                  type="text" id="lname" name="lastName"
+                  class="form-input" placeholder=" " required autocomplete="family-name"
+                />
+                <label for="lname" class="form-label">Last name *</label>
+              </div>
+            </div>
+
+            <div class="form-group">
+              <input
+                type="text" id="business" name="business"
+                class="form-input" placeholder=" " autocomplete="organization"
+              />
+              <label for="business" class="form-label">Business name</label>
+            </div>
+
+            <div class="form-group">
+              <input
+                type="email" id="email" name="email"
+                class="form-input" placeholder=" " required autocomplete="email"
+              />
+              <label for="email" class="form-label">Email address *</label>
+            </div>
+
+            <div class="form-group">
+              <input
+                type="tel" id="phone" name="phone"
+                class="form-input" placeholder=" " autocomplete="tel"
+              />
+              <label for="phone" class="form-label">Phone number</label>
+            </div>
+
+            <div class="form-group">
+              <select id="package" name="package" class="form-input form-select" required>
+                <option value="" disabled selected></option>
+                <option value="base">The Base — $299/mo</option>
+                <option value="fort">The Fort — $799/mo</option>
+                <option value="command">Command Centre — $1,799/mo</option>
+                <option value="unsure">Not sure yet — recommend one for me</option>
+              </select>
+              <label for="package" class="form-label form-label--select">Interested in *</label>
+            </div>
+
+            <div class="form-group">
+              <textarea
+                id="message" name="message"
+                class="form-input form-textarea"
+                placeholder=" " rows="4"
+              ></textarea>
+              <label for="message" class="form-label">Tell us about your business</label>
+            </div>
+
+            <button type="submit" class="btn btn-primary form-submit">
+              Send Enquiry
+              <svg viewBox="0 0 20 20" fill="none" width="16" height="16" aria-hidden="true">
+                <path d="M4 10h12M11 5l5 5-5 5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+              </svg>
+            </button>
+
+            <p class="form-privacy">
+              We respect your privacy. Your details are never shared or sold.
+            </p>
+
+          </form>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<style>
+  /* ── Section ───────────────────────────────────────────── */
+  .contact {
+    padding: 120px 0 100px;
+    background: var(--off-white);
+  }
+
+  /* ── Header ────────────────────────────────────────────── */
+  .contact-header {
+    margin-bottom: 64px;
+  }
+  .contact-header .section-label { margin-bottom: 20px; }
+  .contact-heading {
+    font-family: var(--font-display); font-weight: 900;
+    font-size: clamp(30px, 3.5vw, 52px);
+    line-height: 1.1; color: var(--navy);
+  }
+  .contact-heading em { color: var(--amber); font-style: italic; }
+
+  /* ── Layout ────────────────────────────────────────────── */
+  .contact-layout {
+    display: grid;
+    grid-template-columns: 1fr 1.35fr;
+    gap: 80px;
+    align-items: start;
+  }
+
+  /* ── LEFT ──────────────────────────────────────────────── */
+
+  /* Contact details */
+  .contact-details {
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+    margin-bottom: 36px;
+  }
+  .contact-detail {
+    display: flex; align-items: flex-start; gap: 16px;
+  }
+  .contact-detail-icon {
+    width: 44px; height: 44px; flex-shrink: 0;
+    border-radius: 12px;
+    background: var(--navy);
+    display: flex; align-items: center; justify-content: center;
+  }
+  .contact-detail-icon :global(svg) {
+    width: 18px; height: 18px;
+    color: var(--amber);
+    stroke: var(--amber);
+  }
+  .contact-detail-label {
+    font-size: 11px; font-weight: 700;
+    letter-spacing: 0.1em; text-transform: uppercase;
+    color: var(--text-muted); margin-bottom: 4px;
+  }
+  .contact-detail-value {
+    font-size: 14px; font-weight: 600; color: var(--navy);
+    line-height: 1.4;
+  }
+  .contact-detail-link {
+    transition: color 0.2s;
+  }
+  .contact-detail-link:hover { color: var(--amber); }
+
+  .contact-divider {
+    height: 1px; background: var(--mist);
+    margin-bottom: 36px;
+  }
+
+  /* Next steps */
+  .next-steps-label {
+    font-size: 11px; font-weight: 700;
+    letter-spacing: 0.1em; text-transform: uppercase;
+    color: var(--text-muted); margin-bottom: 28px;
+  }
+  .next-step {
+    display: flex; align-items: flex-start; gap: 16px;
+    position: relative;
+  }
+  .next-step + .next-step { margin-top: 28px; }
+
+  .next-step-num {
+    width: 36px; height: 36px; flex-shrink: 0;
+    border-radius: 50%;
+    background: var(--white);
+    border: 2px solid var(--mist);
+    font-family: var(--font-display); font-weight: 700;
+    font-size: 12px; color: var(--navy);
+    display: flex; align-items: center; justify-content: center;
+    position: relative; z-index: 1;
+  }
+
+  /* Vertical connector between steps */
+  .next-step-connector {
+    position: absolute;
+    left: 17px;
+    top: 36px;
+    width: 2px;
+    height: calc(100% + 28px);
+    background: linear-gradient(to bottom, var(--mist), transparent);
+    z-index: 0;
+  }
+
+  .next-step-body { padding-top: 6px; }
+  .next-step-title {
+    font-weight: 700; font-size: 14px;
+    color: var(--navy); margin-bottom: 4px;
+  }
+  .next-step-desc {
+    font-size: 13px; color: var(--text-muted);
+    line-height: 1.65;
+  }
+
+  /* ── RIGHT: form card ──────────────────────────────────── */
+  .contact-form-card {
+    background: var(--white);
+    border: 1.5px solid var(--mist);
+    border-radius: var(--radius-lg);
+    padding: 48px;
+    box-shadow: 0 4px 32px rgba(12,27,58,0.06);
+  }
+
+  /* ── Form ──────────────────────────────────────────────── */
+  .contact-form { display: flex; flex-direction: column; gap: 20px; }
+
+  .form-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 16px;
+  }
+
+  /* Floating label group */
+  .form-group {
+    position: relative;
+  }
+  .form-input {
+    width: 100%;
+    padding: 20px 16px 8px;
+    border: 1.5px solid var(--mist);
+    border-radius: 10px;
+    font-family: var(--font-body);
+    font-size: 14px;
+    color: var(--navy);
+    background: var(--white);
+    outline: none;
+    transition: border-color 0.22s var(--ease),
+                box-shadow 0.22s var(--ease);
+    appearance: none;
+    -webkit-appearance: none;
+  }
+  .form-input:focus {
+    border-color: var(--amber);
+    box-shadow: 0 0 0 3px rgba(245,155,0,0.12);
+  }
+
+  /* Floating label */
+  .form-label {
+    position: absolute;
+    left: 16px; top: 50%;
+    transform: translateY(-50%);
+    font-size: 14px; color: var(--text-muted);
+    pointer-events: none;
+    transition: top 0.2s var(--ease),
+                font-size 0.2s var(--ease),
+                color 0.2s;
+    white-space: nowrap;
+  }
+  /* Float up when input has content or is focused */
+  .form-input:focus + .form-label,
+  .form-input:not(:placeholder-shown) + .form-label {
+    top: 10px;
+    transform: none;
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: var(--amber);
+  }
+
+  /* Textarea */
+  .form-textarea {
+    padding-top: 24px;
+    resize: vertical;
+    min-height: 110px;
+  }
+  .form-textarea + .form-label { top: 20px; transform: none; }
+  .form-textarea:focus + .form-label,
+  .form-textarea:not(:placeholder-shown) + .form-label {
+    top: 8px;
+  }
+
+  /* Select */
+  .form-select {
+    cursor: pointer;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 16 16' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M4 6l4 4 4-4' stroke='%23888' stroke-width='1.5' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    background-position: right 14px center;
+    background-size: 16px;
+    padding-right: 40px;
+  }
+  .form-label--select {
+    top: 50%; transform: translateY(-50%);
+  }
+  .form-select:focus + .form-label--select,
+  .form-select.has-value + .form-label--select {
+    top: 10px;
+    transform: none;
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: var(--amber);
+  }
+
+  /* Submit */
+  .form-submit {
+    width: 100%; justify-content: center;
+    gap: 10px; font-size: 15px;
+    margin-top: 4px;
+  }
+
+  .form-privacy {
+    font-size: 12px; color: var(--text-muted);
+    text-align: center; line-height: 1.6;
+  }
+
+  /* ── Responsive ────────────────────────────────────────── */
+  @media (max-width: 1024px) {
+    .contact-layout {
+      grid-template-columns: 1fr;
+      gap: 56px;
+    }
+  }
+  @media (max-width: 640px) {
+    .contact { padding: 80px 0 60px; }
+    .contact-form-card { padding: 28px 22px; }
+    .form-row { grid-template-columns: 1fr; gap: 20px; }
+  }
+</style>
+
+<script>
+  (() => {
+    /* Float the select label when a value is chosen */
+    const sel = document.querySelector<HTMLSelectElement>('#package');
+    if (!sel) return;
+    sel.addEventListener('change', () => {
+      sel.classList.toggle('has-value', sel.value !== '');
+    });
+  })();
+</script>

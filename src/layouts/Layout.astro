@@ -1,0 +1,218 @@
+---
+export interface Props {
+  title?: string;
+  description?: string;
+}
+const {
+  title = "Australia Digital Centre | IT Support & Cybersecurity for Australian Small Businesses",
+  description = "Australian-owned IT support, ACSC Essential Eight cybersecurity, cloud migration, and AI automation for small businesses. Sydney-based, serving all of Australia. Month-to-month, no lock-in.",
+} = Astro.props;
+
+const siteUrl   = "https://australiadigital.center";
+const ogImage   = `${siteUrl}/images/og-image.png`;
+const canonical = siteUrl;
+---
+<!doctype html>
+<html lang="en-AU">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  <!-- ── Primary SEO ──────────────────────────────────────── -->
+  <title>{title}</title>
+  <meta name="description" content={description} />
+  <meta name="author" content="Australia Digital Centre" />
+  <meta name="keywords" content="IT support Australia, cybersecurity small business, ACSC Essential Eight, cloud migration Australia, managed IT Sydney, business IT support, Australian IT company, AI automation small business" />
+  <link rel="canonical" href={canonical} />
+  <meta name="robots" content="index, follow, max-snippet:-1, max-image-preview:large, max-video-preview:-1" />
+
+  <!-- ── Geo / Local SEO ──────────────────────────────────── -->
+  <meta name="geo.region" content="AU-NSW" />
+  <meta name="geo.placename" content="Sydney, New South Wales, Australia" />
+
+  <!-- ── Open Graph (Facebook, LinkedIn, Slack) ───────────── -->
+  <meta property="og:type"        content="website" />
+  <meta property="og:url"         content={siteUrl} />
+  <meta property="og:site_name"   content="Australia Digital Centre" />
+  <meta property="og:title"       content={title} />
+  <meta property="og:description" content={description} />
+  <meta property="og:image"       content={ogImage} />
+  <meta property="og:image:width"  content="1200" />
+  <meta property="og:image:height" content="630" />
+  <meta property="og:image:alt"   content="Australia Digital Centre — IT Support & Cybersecurity for Australian Small Businesses" />
+  <meta property="og:locale"      content="en_AU" />
+
+  <!-- ── Twitter / X Card ─────────────────────────────────── -->
+  <meta name="twitter:card"        content="summary_large_image" />
+  <meta name="twitter:site"        content="@AustDigitalCtr" />
+  <meta name="twitter:title"       content={title} />
+  <meta name="twitter:description" content={description} />
+  <meta name="twitter:image"       content={ogImage} />
+
+  <!-- ── Favicon ──────────────────────────────────────────── -->
+  <link rel="icon"             type="image/png"    href="/favicon.png" />
+  <link rel="apple-touch-icon" sizes="180x180"     href="/apple-touch-icon.png" />
+
+  <!-- ── Sitemap + RSS ────────────────────────────────────── -->
+  <link rel="sitemap" type="application/xml" href="/sitemap.xml" />
+
+  <!-- ── Fonts preconnect ─────────────────────────────────── -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+
+  <!-- ── Google verification ──────────────────────────────── -->
+  <meta name="google-site-verification" content="1YbLH2lPvFBFZ4gzkNsXS-9lHNp_HbO8qiTRJS-g68Y" />
+
+  <!-- ── Structured Data: LocalBusiness ───────────────────── -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": ["ProfessionalService", "LocalBusiness"],
+    "@id": "https://australiadigital.center/#business",
+    "name": "Australia Digital Centre",
+    "alternateName": "ADC",
+    "url": "https://australiadigital.center",
+    "logo": "https://australiadigital.center/images/adc-logo.svg",
+    "image": "https://australiadigital.center/images/og-image.png",
+    "description": "Australian-owned IT support, ACSC Essential Eight cybersecurity, cloud migration, and AI automation for small businesses across Australia.",
+    "telephone": "1300-232-287",
+    "email": "hello@australiadigital.center",
+    "address": {
+      "@type": "PostalAddress",
+      "addressLocality": "Sydney",
+      "addressRegion": "NSW",
+      "addressCountry": "AU"
+    },
+    "geo": {
+      "@type": "GeoCoordinates",
+      "latitude": -33.8688,
+      "longitude": 151.2093
+    },
+    "areaServed": {
+      "@type": "Country",
+      "name": "Australia"
+    },
+    "priceRange": "$$$",
+    "openingHoursSpecification": {
+      "@type": "OpeningHoursSpecification",
+      "dayOfWeek": ["Monday","Tuesday","Wednesday","Thursday","Friday"],
+      "opens": "09:00",
+      "closes": "17:30"
+    },
+    "sameAs": [
+      "https://www.linkedin.com/company/australia-digital-centre",
+      "https://www.facebook.com/australiadigitalcentre"
+    ],
+    "hasOfferCatalog": {
+      "@type": "OfferCatalog",
+      "name": "IT & Cybersecurity Packages",
+      "itemListElement": [
+        {
+          "@type": "Offer",
+          "name": "The Base",
+          "description": "Business identity setup — ABN guidance, domain, email, website, and social handles for new businesses.",
+          "price": "299",
+          "priceCurrency": "AUD",
+          "priceSpecification": { "@type": "UnitPriceSpecification", "billingDuration": "P1M" }
+        },
+        {
+          "@type": "Offer",
+          "name": "The Fort",
+          "description": "Managed IT and cybersecurity — 24/7 endpoint monitoring, ACSC Essential Eight Phase 1, cloud backups, 4-hour SLA.",
+          "price": "799",
+          "priceCurrency": "AUD",
+          "priceSpecification": { "@type": "UnitPriceSpecification", "billingDuration": "P1M" }
+        },
+        {
+          "@type": "Offer",
+          "name": "Command Centre",
+          "description": "Full-stack IT — everything in The Fort plus AI workflow automation, full ACSC compliance, dedicated account manager.",
+          "price": "1799",
+          "priceCurrency": "AUD",
+          "priceSpecification": { "@type": "UnitPriceSpecification", "billingDuration": "P1M" }
+        }
+      ]
+    }
+  }
+  </script>
+
+  <!-- ── Structured Data: WebSite + Sitelinks Searchbox ───── -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "WebSite",
+    "@id": "https://australiadigital.center/#website",
+    "url": "https://australiadigital.center",
+    "name": "Australia Digital Centre",
+    "description": "IT support and cybersecurity for Australian small businesses",
+    "publisher": { "@id": "https://australiadigital.center/#business" },
+    "inLanguage": "en-AU"
+  }
+  </script>
+
+  <!-- ── Structured Data: FAQPage (AI tools pull directly from this) ── -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    "mainEntity": [
+      {
+        "@type": "Question",
+        "name": "Is there a lock-in contract with Australia Digital Centre?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "No. All ADC packages are month-to-month. We earn your business every month — no lock-in contracts, ever."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "Can I upgrade between ADC pricing tiers?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Absolutely. You can upgrade at any time and we'll pro-rate your billing accordingly."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "Where is my business data hosted with Australia Digital Centre?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "All data is hosted in Australian data centres — Azure Australia East or AWS ap-southeast-2. It never leaves Australian shores, ensuring full data sovereignty."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "What does the free Digital Health Check involve?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "We review your current digital setup — website, email, security posture, and IT infrastructure — and give you an honest assessment with a recommended package. No obligation."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "What is the ACSC Essential Eight and why does my business need it?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "The ACSC Essential Eight is the Australian Government's baseline cybersecurity framework for protecting businesses from common cyber threats. Australia Digital Centre aligns every client with this framework from day one, including MFA enforcement, application control, patching, and encrypted backups."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "How quickly does Australia Digital Centre respond to IT issues?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Priority helpdesk clients on The Fort and Command Centre packages receive a guaranteed 4-hour response SLA, available 24/7."
+        }
+      }
+    ]
+  }
+  </script>
+</head>
+<body>
+  <slot />
+</body>
+</html>
+
+<style is:global>
+  @import '../styles/tokens.css';
+</style>

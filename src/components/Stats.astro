@@ -1,0 +1,261 @@
+---
+/* Stats.astro
+   21st.dev pattern: animated counter strip — 4 large numbers with suffix,
+   label, and supporting copy on a navy band. JS IntersectionObserver
+   triggers count-up once on scroll-in. Amber radial glow on featured stat.
+*/
+
+const stats = [
+  {
+    value: 150,
+    suffix: "+",
+    label: "Businesses Supported",
+    sub: "Across Australia",
+    featured: false,
+  },
+  {
+    value: 99,
+    suffix: "%",
+    label: "Uptime Guarantee",
+    sub: "Australian data centres",
+    featured: true,
+  },
+  {
+    value: 4,
+    suffix: "hr",
+    label: "Response SLA",
+    sub: "Priority helpdesk",
+    featured: false,
+  },
+  {
+    value: 100,
+    suffix: "%",
+    label: "Australian-Owned Data",
+    sub: "Never leaves AU shores",
+    featured: false,
+  },
+];
+---
+
+<section class="stats" id="stats">
+  <!-- Dot grid overlay -->
+  <div class="stats-grid-bg" aria-hidden="true"></div>
+
+  <div class="container">
+    <div class="stats-inner fade-up">
+      {stats.map((s, i) => (
+        <>
+          <div class={`stat-item ${s.featured ? 'stat-item--featured' : ''}`}>
+            {s.featured && (
+              <div class="stat-glow" aria-hidden="true"></div>
+            )}
+            <div class="stat-number">
+              <span
+                class="stat-count"
+                data-target={s.value}
+                data-suffix={s.suffix}
+              >0</span>
+              <span class="stat-suffix">{s.suffix}</span>
+            </div>
+            <div class="stat-label">{s.label}</div>
+            <div class="stat-sub">{s.sub}</div>
+          </div>
+
+          {i < stats.length - 1 && (
+            <div class="stat-sep" aria-hidden="true"></div>
+          )}
+        </>
+      ))}
+    </div>
+  </div>
+</section>
+
+<script>
+  (() => {
+    let animated = false;
+
+    function easeOutQuart(t: number) {
+      return 1 - Math.pow(1 - t, 4);
+    }
+
+    function animateCounters() {
+      if (animated) return;
+      animated = true;
+
+      const counters = document.querySelectorAll<HTMLElement>('.stat-count');
+      counters.forEach(el => {
+        const target = parseInt(el.dataset.target ?? '0', 10);
+        const suffix = el.dataset.suffix ?? '';
+        const duration = 1800;
+        const start = performance.now();
+
+        function tick(now: number) {
+          const elapsed = now - start;
+          const progress = Math.min(elapsed / duration, 1);
+          const eased = easeOutQuart(progress);
+          const current = Math.round(eased * target);
+          el.textContent = current.toString();
+          if (progress < 1) requestAnimationFrame(tick);
+          else el.textContent = target.toString();
+        }
+
+        requestAnimationFrame(tick);
+      });
+    }
+
+    const section = document.querySelector('.stats');
+    if (!section) return;
+
+    const observer = new IntersectionObserver(
+      ([entry]) => { if (entry.isIntersecting) animateCounters(); },
+      { threshold: 0.3 }
+    );
+    observer.observe(section);
+  })();
+</script>
+
+<style>
+  /* ── Section ───────────────────────────────────────────── */
+  .stats {
+    background: var(--navy);
+    padding: 100px 0;
+    position: relative;
+    overflow: hidden;
+  }
+
+  /* Dot grid */
+  .stats-grid-bg {
+    position: absolute; inset: 0;
+    background-image:
+      radial-gradient(circle, rgba(245,155,0,0.06) 1px, transparent 1px);
+    background-size: 36px 36px;
+    pointer-events: none;
+  }
+
+  /* ── Inner row ─────────────────────────────────────────── */
+  .stats-inner {
+    position: relative; z-index: 1;
+    display: flex;
+    align-items: stretch;
+    justify-content: center;
+    gap: 0;
+    flex-wrap: nowrap;
+  }
+
+  /* ── Separator ─────────────────────────────────────────── */
+  .stat-sep {
+    width: 1px;
+    align-self: stretch;
+    background: rgba(255,255,255,0.08);
+    flex-shrink: 0;
+    margin: 0 8px;
+  }
+
+  /* ── Stat item ─────────────────────────────────────────── */
+  .stat-item {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    padding: 24px 32px;
+    position: relative;
+  }
+
+  /* Featured glow */
+  .stat-glow {
+    position: absolute;
+    width: 200px; height: 200px;
+    border-radius: 50%;
+    background: radial-gradient(circle, rgba(245,155,0,0.18) 0%, transparent 70%);
+    top: 50%; left: 50%;
+    transform: translate(-50%, -50%);
+    pointer-events: none;
+    animation: glowPulse 3s ease-in-out infinite;
+  }
+  @keyframes glowPulse {
+    0%, 100% { opacity: 0.7; transform: translate(-50%, -50%) scale(1); }
+    50%       { opacity: 1;   transform: translate(-50%, -50%) scale(1.15); }
+  }
+
+  /* ── Number ────────────────────────────────────────────── */
+  .stat-number {
+    display: flex;
+    align-items: baseline;
+    gap: 1px;
+    margin-bottom: 12px;
+    position: relative; z-index: 1;
+  }
+  .stat-count {
+    font-family: var(--font-display);
+    font-size: clamp(48px, 6vw, 80px);
+    font-weight: 900;
+    color: var(--white);
+    line-height: 1;
+    letter-spacing: -0.02em;
+    tabular-nums: all;
+  }
+  .stat-suffix {
+    font-family: var(--font-display);
+    font-size: clamp(28px, 3.5vw, 46px);
+    font-weight: 900;
+    color: var(--amber);
+    line-height: 1;
+  }
+
+  /* Featured stat: number in amber */
+  .stat-item--featured .stat-count { color: var(--amber); }
+  .stat-item--featured .stat-suffix { color: rgba(245,155,0,0.6); }
+
+  /* ── Label ─────────────────────────────────────────────── */
+  .stat-label {
+    font-weight: 700;
+    font-size: 14px;
+    color: var(--white);
+    margin-bottom: 4px;
+    letter-spacing: 0.01em;
+    position: relative; z-index: 1;
+  }
+  .stat-sub {
+    font-size: 12px;
+    color: rgba(255,255,255,0.4);
+    letter-spacing: 0.03em;
+    position: relative; z-index: 1;
+  }
+
+  /* ── Responsive ────────────────────────────────────────── */
+  @media (max-width: 1024px) {
+    .stats-inner {
+      display: grid;
+      grid-template-columns: 1fr 1px 1fr;
+      grid-template-rows: auto 1px auto;
+      gap: 0;
+    }
+    /* Re-lay separators as horizontal rules in the 2×2 grid */
+    .stat-sep:nth-of-type(2) {
+      grid-column: 1 / -1;
+      width: auto;
+      height: 1px;
+      margin: 0;
+      align-self: auto;
+    }
+    /* Hide the 3rd separator (between col-2 row-2 items, not needed) */
+    .stat-sep:nth-of-type(4) { display: none; }
+    .stat-item { padding: 36px 24px; }
+  }
+
+  @media (max-width: 640px) {
+    .stats { padding: 72px 0; }
+    .stats-inner {
+      grid-template-columns: 1fr;
+      grid-template-rows: unset;
+    }
+    .stat-sep {
+      width: auto; height: 1px;
+      margin: 0;
+      align-self: auto;
+    }
+    .stat-sep:nth-of-type(4) { display: block; }
+    .stat-item { padding: 32px 20px; }
+  }
+</style>

@@ -1,0 +1,265 @@
+---
+/* Nav.astro
+   Adapting the 21st.dev sticky nav with backdrop-blur + animated
+   underline active-link pattern. Mobile-first with full-screen overlay menu.
+*/
+---
+
+<!-- ======= NAVIGATION ======= -->
+<nav class="nav" id="nav">
+  <div class="container">
+    <div class="nav-inner">
+
+      <!-- Logo -->
+      <a href="#hero" class="nav-logo" aria-label="Australia Digital Centre home">
+        <!-- Brand logo mark: purple square with orange network icon -->
+        <div class="nav-logo-mark" aria-hidden="true">
+          <svg viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <rect width="40" height="40" rx="8" fill="#3232C8"/>
+            <!-- orange network squares -->
+            <rect x="7"  y="7"  width="9" height="9" rx="1.5" fill="#F59B00"/>
+            <rect x="24" y="7"  width="9" height="9" rx="1.5" fill="#F59B00"/>
+            <rect x="15" y="22" width="9" height="9" rx="1.5" fill="#F59B00"/>
+            <!-- connecting lines -->
+            <line x1="16" y1="11.5" x2="24" y2="11.5" stroke="#F59B00" stroke-width="1.5" stroke-linecap="round" opacity="0.6"/>
+            <line x1="11.5" y1="16" x2="19.5" y2="22" stroke="#F59B00" stroke-width="1.5" stroke-linecap="round" opacity="0.6"/>
+            <line x1="28.5" y1="16" x2="22" y2="22" stroke="#F59B00" stroke-width="1.5" stroke-linecap="round" opacity="0.6"/>
+          </svg>
+        </div>
+        <span class="nav-logo-text">Australia Digital<span> Centre</span></span>
+      </a>
+
+      <!-- Desktop links -->
+      <ul class="nav-links" role="list">
+        <li><a href="#about">About</a></li>
+        <li><a href="#services">Services</a></li>
+        <li><a href="#packages">Packages</a></li>
+        <li><a href="#contact">Contact</a></li>
+      </ul>
+
+      <!-- Desktop CTAs -->
+      <div class="nav-cta">
+        <a href="#packages" class="btn btn-ghost btn-sm">View Packages</a>
+        <a href="#contact"  class="btn btn-primary btn-sm">Get Started</a>
+      </div>
+
+      <!-- Hamburger (mobile) -->
+      <button class="hamburger" id="hamburger" aria-label="Open menu" aria-expanded="false" aria-controls="mobileMenu">
+        <span></span><span></span><span></span>
+      </button>
+
+    </div>
+  </div>
+</nav>
+
+<!-- Mobile full-screen overlay menu -->
+<div class="mobile-menu" id="mobileMenu" role="dialog" aria-label="Navigation menu" aria-hidden="true">
+  <nav aria-label="Mobile navigation">
+    <a href="#about"    class="mobile-link">About</a>
+    <a href="#services" class="mobile-link">Services</a>
+    <a href="#packages" class="mobile-link">Packages</a>
+    <a href="#contact"  class="mobile-link">Contact</a>
+  </nav>
+  <div class="mobile-cta">
+    <a href="#contact"  class="btn btn-primary">Get Started Free</a>
+    <a href="#packages" class="btn btn-ghost">View Packages</a>
+  </div>
+</div>
+
+<style>
+  /* ── Nav shell ─────────────────────────────────────────── */
+  .nav {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+    background: var(--white);
+    border-bottom: 1px solid transparent;
+    transition: background 0.3s var(--ease),
+                border-color 0.3s var(--ease),
+                box-shadow 0.3s var(--ease);
+  }
+  .nav.scrolled {
+    background: rgba(255, 255, 255, 0.92);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    border-color: rgba(12,27,58,0.07);
+    box-shadow: 0 2px 20px rgba(12,27,58,0.08);
+  }
+
+  /* ── Inner layout ──────────────────────────────────────── */
+  .nav-inner {
+    display: flex; align-items: center;
+    justify-content: space-between;
+    height: var(--nav-h);
+    gap: 24px;
+  }
+
+  /* ── Logo ──────────────────────────────────────────────── */
+  .nav-logo {
+    display: flex; align-items: center; gap: 10px;
+    flex-shrink: 0;
+  }
+  .nav-logo-mark {
+    width: 36px; height: 36px; flex-shrink: 0;
+    transition: transform 0.3s var(--ease);
+  }
+  .nav-logo:hover .nav-logo-mark { transform: rotate(-4deg) scale(1.05); }
+  .nav-logo-mark svg { width: 100%; height: 100%; display: block; }
+  .nav-logo-text {
+    font-family: var(--font-display); font-weight: 700;
+    font-size: 17px; color: var(--navy); line-height: 1;
+    white-space: nowrap;
+  }
+  .nav-logo-text span { color: var(--amber); }
+
+  /* ── Desktop links ─────────────────────────────────────── */
+  .nav-links {
+    display: flex; align-items: center; gap: 32px;
+    margin: 0 auto; /* center between logo & CTA */
+  }
+  .nav-links a {
+    font-size: 14px; font-weight: 500; color: var(--navy);
+    opacity: 0.65; transition: opacity 0.2s;
+    position: relative; padding-bottom: 3px;
+  }
+  /* Animated underline */
+  .nav-links a::after {
+    content: ''; position: absolute;
+    bottom: -2px; left: 0; right: 0;
+    height: 2px; background: var(--amber);
+    transform: scaleX(0); transform-origin: left;
+    transition: transform 0.25s var(--ease);
+    border-radius: 1px;
+  }
+  .nav-links a:hover,
+  .nav-links a.active { opacity: 1; }
+  .nav-links a:hover::after,
+  .nav-links a.active::after { transform: scaleX(1); }
+
+  /* ── Desktop CTA buttons ───────────────────────────────── */
+  .nav-cta { display: flex; align-items: center; gap: 10px; flex-shrink: 0; }
+  .btn-sm   { padding: 9px 20px !important; font-size: 13px !important; }
+
+  /* ── Hamburger ─────────────────────────────────────────── */
+  .hamburger {
+    display: none; background: none; border: none; cursor: pointer;
+    flex-direction: column; justify-content: center; gap: 5px;
+    padding: 6px; border-radius: 8px;
+    transition: background 0.2s;
+  }
+  .hamburger:hover { background: var(--mist); }
+  .hamburger span {
+    display: block; width: 22px; height: 2px;
+    background: var(--navy); border-radius: 2px;
+    transition: transform 0.3s var(--ease), opacity 0.3s var(--ease);
+    transform-origin: center;
+  }
+  /* Open state */
+  .hamburger[aria-expanded="true"] span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
+  .hamburger[aria-expanded="true"] span:nth-child(2) { opacity: 0; transform: scaleX(0); }
+  .hamburger[aria-expanded="true"] span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
+
+  /* ── Mobile overlay menu ───────────────────────────────── */
+  .mobile-menu {
+    display: flex; flex-direction: column; gap: 0;
+    position: fixed; inset: 0; z-index: 99;
+    background: var(--white);
+    padding: calc(var(--nav-h) + 24px) 32px 48px;
+    opacity: 0; pointer-events: none;
+    transform: translateY(-8px);
+    transition: opacity 0.3s var(--ease), transform 0.3s var(--ease);
+  }
+  .mobile-menu.open {
+    opacity: 1; pointer-events: all; transform: translateY(0);
+  }
+  .mobile-link {
+    display: block;
+    font-size: 28px; font-family: var(--font-display); font-weight: 700;
+    color: var(--navy); padding: 16px 0;
+    border-bottom: 1px solid var(--mist);
+    transition: color 0.2s, padding-left 0.2s var(--ease);
+  }
+  .mobile-link:hover { color: var(--amber); padding-left: 8px; }
+  .mobile-cta {
+    margin-top: 32px; display: flex; flex-direction: column; gap: 12px;
+  }
+  .mobile-cta .btn { justify-content: center; }
+
+  /* ── Responsive ────────────────────────────────────────── */
+  @media (max-width: 768px) {
+    .nav-links, .nav-cta { display: none; }
+    .hamburger { display: flex; }
+  }
+  @media (min-width: 769px) {
+    .mobile-menu { display: none !important; }
+  }
+</style>
+
+<script>
+  const nav       = document.getElementById('nav');
+  const hamburger = document.getElementById('hamburger');
+  const menu      = document.getElementById('mobileMenu');
+
+  /* Scroll: add .scrolled class */
+  window.addEventListener('scroll', () => {
+    nav?.classList.toggle('scrolled', window.scrollY > 40);
+  }, { passive: true });
+
+  /* Hamburger toggle */
+  hamburger?.addEventListener('click', () => {
+    const isOpen = menu?.classList.toggle('open');
+    hamburger.setAttribute('aria-expanded', String(isOpen));
+    menu?.setAttribute('aria-hidden', String(!isOpen));
+    document.body.style.overflow = isOpen ? 'hidden' : '';
+  });
+
+  /* Close menu on mobile link click */
+  menu?.querySelectorAll('a').forEach(link => {
+    link.addEventListener('click', () => {
+      menu.classList.remove('open');
+      hamburger?.setAttribute('aria-expanded', 'false');
+      menu.setAttribute('aria-hidden', 'true');
+      document.body.style.overflow = '';
+    });
+  });
+
+  /* Close on Escape */
+  document.addEventListener('keydown', e => {
+    if (e.key === 'Escape' && menu?.classList.contains('open')) {
+      menu.classList.remove('open');
+      hamburger?.setAttribute('aria-expanded', 'false');
+      menu.setAttribute('aria-hidden', 'true');
+      document.body.style.overflow = '';
+    }
+  });
+
+  /* Active link on scroll */
+  const sections = document.querySelectorAll('section[id]');
+  const navLinks = document.querySelectorAll('.nav-links a[href^="#"]');
+  const onScroll = () => {
+    let current = '';
+    sections.forEach(s => {
+      if (window.scrollY >= s.offsetTop - 100) current = '#' + s.id;
+    });
+    navLinks.forEach(a => {
+      a.classList.toggle('active', a.getAttribute('href') === current);
+    });
+  };
+  window.addEventListener('scroll', onScroll, { passive: true });
+  onScroll();
+
+  /* Smooth scroll for all anchor links */
+  const navH = parseInt(getComputedStyle(document.documentElement).getPropertyValue('--nav-h')) || 68;
+  document.querySelectorAll('a[href^="#"]').forEach(a => {
+    a.addEventListener('click', e => {
+      const href = a.getAttribute('href');
+      if (href === '#') return;
+      const target = document.querySelector(href);
+      if (target) {
+        e.preventDefault();
+        window.scrollTo({
+          top: target.getBoundingClientRect().top + window.scrollY - navH,
+          behavior: 'smooth'
+        });
+      }
+    });
+  });
+</script>

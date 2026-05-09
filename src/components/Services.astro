@@ -1,0 +1,238 @@
+---
+/* Services.astro
+   21st.dev pattern: bento card grid — icon top-left, category label,
+   headline, description. Staggered fade-up reveal + hover lift with
+   amber accent border.
+*/
+
+const services = [
+  {
+    category: "Business Identity",
+    title: "Online Presence Setup",
+    body: "ABN & ASIC guidance, .com.au domain, professional email, social media handle security, and a 3-page mobile-optimised website — all configured for you.",
+    icon: `<svg viewBox="0 0 24 24" fill="none"><rect x="3" y="3" width="18" height="13" rx="2" stroke="currentColor" stroke-width="1.5"/><path d="M8 21h8M12 16v5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>`,
+    accent: false,
+  },
+  {
+    category: "Cybersecurity",
+    title: "ACSC Essential Eight",
+    body: "MFA enforcement, next-gen antivirus, encrypted backups, and application control — aligned to the Australian Government's baseline cybersecurity framework.",
+    icon: `<svg viewBox="0 0 24 24" fill="none"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10Z" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/></svg>`,
+    accent: false,
+  },
+  {
+    category: "Infrastructure",
+    title: "Cloud Migration",
+    body: "Migration to Azure Australia East or AWS ap-southeast-2. Your data stays on Australian soil, with daily backups and 30-day retention included.",
+    icon: `<svg viewBox="0 0 24 24" fill="none"><path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/><path d="M9 22V12h6v10" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>`,
+    accent: false,
+  },
+  {
+    category: "Managed IT",
+    title: "24/7 Endpoint Monitoring",
+    body: "Up to 10 devices monitored around the clock. Priority helpdesk with a 4-hour response SLA and monthly IT health reports.",
+    icon: `<svg viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="3" stroke="currentColor" stroke-width="1.5"/><path d="M19.07 4.93a10 10 0 010 14.14M4.93 4.93a10 10 0 000 14.14" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>`,
+    accent: false,
+  },
+  {
+    category: "AI Automation",
+    title: "Custom AI Workflows",
+    body: "We build and deploy one custom AI agent workflow per Command Centre client — quoting, scheduling, follow-ups, or whatever saves you the most time.",
+    icon: `<svg viewBox="0 0 24 24" fill="none"><rect x="2" y="3" width="20" height="14" rx="2" stroke="currentColor" stroke-width="1.5"/><path d="M8 21h8M12 17v4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/><path d="M7 10l2 2 4-4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>`,
+    accent: true, // featured card
+  },
+  {
+    category: "Strategy",
+    title: "Dedicated Account Management",
+    body: "A dedicated account manager and monthly 1-hour strategy session for Command Centre clients. We're invested in your growth, not just your ticket queue.",
+    icon: `<svg viewBox="0 0 24 24" fill="none"><path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/><circle cx="9" cy="7" r="4" stroke="currentColor" stroke-width="1.5"/><path d="M23 21v-2a4 4 0 00-3-3.87M16 3.13a4 4 0 010 7.75" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>`,
+    accent: false,
+  },
+];
+---
+
+<section class="services" id="services">
+  <div class="container">
+
+    <!-- Header -->
+    <div class="services-header fade-up">
+      <span class="section-label">Our Services</span>
+      <h2 class="services-heading">
+        Everything your business needs,<br/><em>in one place.</em>
+      </h2>
+      <p class="services-sub">
+        ADC covers the full digital stack so you never need to manage multiple vendors.
+      </p>
+    </div>
+
+    <!-- Cards grid -->
+    <div class="services-grid">
+      {services.map((svc, i) => (
+        <article
+          class={`svc-card fade-up ${svc.accent ? 'svc-card--accent' : ''}`}
+          style={`transition-delay: ${(i % 3) * 0.1}s`}
+        >
+          <!-- Icon -->
+          <div class="svc-icon" aria-hidden="true">
+            <Fragment set:html={svc.icon} />
+          </div>
+
+          <!-- Category label -->
+          <div class="svc-category">{svc.category}</div>
+
+          <!-- Title -->
+          <h3 class="svc-title">{svc.title}</h3>
+
+          <!-- Body -->
+          <p class="svc-body">{svc.body}</p>
+
+          <!-- Learn more link -->
+          <div class="svc-footer">
+            <a href="#contact" class="svc-link">
+              Get started
+              <svg viewBox="0 0 16 16" fill="none" width="14" height="14">
+                <path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+              </svg>
+            </a>
+          </div>
+        </article>
+      ))}
+    </div>
+
+  </div>
+</section>
+
+<style>
+  /* ── Section ───────────────────────────────────────────── */
+  .services {
+    padding: 120px 0;
+    background: var(--off-white);
+  }
+
+  /* ── Header ────────────────────────────────────────────── */
+  .services-header {
+    text-align: center;
+    margin-bottom: 72px;
+  }
+  .services-header .section-label { margin: 0 auto 20px; display: flex; }
+  .services-heading {
+    font-family: var(--font-display); font-weight: 900;
+    font-size: clamp(30px, 3.5vw, 52px);
+    line-height: 1.1; color: var(--navy);
+    margin-bottom: 16px;
+  }
+  .services-heading em { color: var(--amber); font-style: italic; }
+  .services-sub {
+    font-size: 18px; color: var(--text-muted);
+    max-width: 520px; margin: 0 auto; line-height: 1.7;
+  }
+
+  /* ── Grid ──────────────────────────────────────────────── */
+  .services-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 24px;
+  }
+
+  /* ── Card ──────────────────────────────────────────────── */
+  .svc-card {
+    background: var(--white);
+    border: 1.5px solid var(--mist);
+    border-radius: var(--radius-lg);
+    padding: 36px;
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+    position: relative;
+    overflow: hidden;
+    transition: border-color 0.28s var(--ease),
+                box-shadow 0.28s var(--ease),
+                transform 0.28s var(--ease);
+    cursor: default;
+  }
+  .svc-card::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 3px;
+    background: var(--amber);
+    transform: scaleX(0);
+    transform-origin: left;
+    transition: transform 0.35s var(--ease);
+    border-radius: 0 0 2px 2px;
+  }
+  .svc-card:hover {
+    border-color: rgba(245,155,0,0.3);
+    box-shadow: var(--shadow-hover);
+    transform: translateY(-4px);
+  }
+  .svc-card:hover::before { transform: scaleX(1); }
+
+  /* Accent / featured card (AI Workflows) */
+  .svc-card--accent {
+    background: var(--navy);
+    border-color: var(--navy);
+  }
+  .svc-card--accent::before { background: var(--amber); }
+  .svc-card--accent .svc-category { color: var(--amber); }
+  .svc-card--accent .svc-title   { color: var(--white); }
+  .svc-card--accent .svc-body    { color: rgba(255,255,255,0.55); }
+  .svc-card--accent .svc-icon    { background: rgba(245,155,0,0.15); }
+  .svc-card--accent .svc-icon :global(svg) { color: var(--amber); }
+  .svc-card--accent .svc-link    { color: var(--amber); }
+  .svc-card--accent:hover        { border-color: var(--amber); }
+
+  /* ── Card internals ────────────────────────────────────── */
+  .svc-icon {
+    width: 52px; height: 52px;
+    border-radius: 14px;
+    background: var(--navy);
+    display: flex; align-items: center; justify-content: center;
+    margin-bottom: 24px;
+    flex-shrink: 0;
+    transition: background 0.25s var(--ease), transform 0.25s var(--ease);
+  }
+  .svc-card:hover .svc-icon { transform: scale(1.06); }
+  .svc-icon :global(svg) {
+    width: 24px; height: 24px;
+    color: var(--amber);
+  }
+
+  .svc-category {
+    font-size: 11px; font-weight: 700;
+    letter-spacing: 0.12em; text-transform: uppercase;
+    color: var(--amber); margin-bottom: 10px;
+  }
+
+  .svc-title {
+    font-family: var(--font-display); font-size: 21px; font-weight: 700;
+    color: var(--navy); margin-bottom: 14px; line-height: 1.25;
+  }
+
+  .svc-body {
+    font-size: 14px; color: var(--text-muted);
+    line-height: 1.75; flex: 1;
+    margin-bottom: 28px;
+  }
+
+  /* Footer link */
+  .svc-footer { margin-top: auto; }
+  .svc-link {
+    display: inline-flex; align-items: center; gap: 6px;
+    font-size: 13px; font-weight: 600;
+    color: var(--navy);
+    transition: gap 0.2s var(--ease), color 0.2s;
+  }
+  .svc-link:hover { gap: 10px; color: var(--amber); }
+  .svc-link svg { flex-shrink: 0; }
+
+  /* ── Responsive ────────────────────────────────────────── */
+  @media (max-width: 1024px) {
+    .services-grid { grid-template-columns: repeat(2, 1fr); }
+  }
+  @media (max-width: 640px) {
+    .services { padding: 80px 0; }
+    .services-grid { grid-template-columns: 1fr; }
+    .svc-card { padding: 28px; }
+  }
+</style>

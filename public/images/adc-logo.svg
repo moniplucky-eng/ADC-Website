@@ -1,0 +1,20 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 240 240" width="240" height="240">
+  <rect width="240" height="240" rx="24" fill="#3232C8"/>
+  <!-- Australia text -->
+  <text x="120" y="92" font-family="'DM Sans', Arial, sans-serif" font-weight="700" font-size="36" fill="white" text-anchor="middle" letter-spacing="-0.5">Australia</text>
+  <!-- Orange network icon -->
+  <g transform="translate(88, 108)">
+    <!-- squares -->
+    <rect x="0"  y="0"  width="14" height="14" rx="2" fill="#F59B00"/>
+    <rect x="26" y="0"  width="14" height="14" rx="2" fill="#F59B00"/>
+    <rect x="13" y="18" width="14" height="14" rx="2" fill="#F59B00"/>
+    <rect x="36" y="18" width="14" height="14" rx="2" fill="#F59B00"/>
+    <!-- connecting lines -->
+    <line x1="14" y1="7"  x2="26" y2="7"  stroke="#F59B00" stroke-width="2" opacity="0.7"/>
+    <line x1="7"  y1="14" x2="20" y2="18" stroke="#F59B00" stroke-width="2" opacity="0.7"/>
+    <line x1="33" y1="14" x2="43" y2="18" stroke="#F59B00" stroke-width="2" opacity="0.7"/>
+    <line x1="27" y1="7"  x2="43" y2="18" stroke="#F59B00" stroke-width="2" opacity="0.7"/>
+  </g>
+  <!-- Digital Center text -->
+  <text x="120" y="168" font-family="'DM Sans', Arial, sans-serif" font-weight="700" font-size="30" fill="white" text-anchor="middle" letter-spacing="-0.5">Digital Center</text>
+</svg>

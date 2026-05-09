@@ -1,0 +1,283 @@
+---
+/* Team.astro
+   21st.dev pattern: team card trio — circular avatar with hover scale,
+   amber role pill, short bio, LinkedIn icon link. Cards lift on hover
+   with amber top-border sweep (same pattern as Services).
+*/
+
+const members = [
+  {
+    name: "James Hartley",
+    role: "Founder & CEO",
+    bio: "Former enterprise IT architect with 15 years across ASX-listed firms. James founded ADC to give small businesses the same digital muscle as the big end of town.",
+    initials: "JH",
+    avatarBg: "#0C1B3A",
+    avatarText: "#F59B00",
+    linkedin: "#",
+  },
+  {
+    name: "Priya Mehta",
+    role: "Head of Cybersecurity",
+    bio: "ACSC-certified security specialist and former federal government IT auditor. Priya leads all Essential Eight implementations and quarterly security reviews.",
+    initials: "PM",
+    avatarBg: "#3232C8",
+    avatarText: "#ffffff",
+    linkedin: "#",
+  },
+  {
+    name: "Tom Nguyen",
+    role: "Client Success Manager",
+    bio: "Tom's job is making sure every ADC client feels like our only client. He owns onboarding, monthly reporting, and the 4-hour helpdesk SLA — personally.",
+    initials: "TN",
+    avatarBg: "#F59B00",
+    avatarText: "#0C1B3A",
+    linkedin: "#",
+  },
+];
+---
+
+<section class="team" id="team">
+  <div class="container">
+
+    <!-- Header -->
+    <div class="team-header fade-up">
+      <span class="section-label">Our Team</span>
+      <h2 class="team-heading">
+        The people behind<br/><em>every outcome.</em>
+      </h2>
+      <p class="team-sub">
+        Small team. Deep expertise. Every client gets senior attention — not a junior ticket queue.
+      </p>
+    </div>
+
+    <!-- Cards -->
+    <div class="team-grid">
+      {members.map((m, i) => (
+        <article
+          class="team-card fade-up"
+          style={`transition-delay: ${i * 0.12}s`}
+        >
+          <!-- Amber top sweep (same pattern as svc-card::before) -->
+          <div class="team-card-inner">
+
+            <!-- Avatar -->
+            <div class="team-avatar-wrap">
+              <div
+                class="team-avatar"
+                style={`background: ${m.avatarBg}; color: ${m.avatarText};`}
+                aria-hidden="true"
+              >
+                {m.initials}
+              </div>
+              <!-- Amber ring on hover -->
+              <div class="team-avatar-ring" aria-hidden="true"></div>
+            </div>
+
+            <!-- Name + role -->
+            <div class="team-name">{m.name}</div>
+            <div class="team-role-wrap">
+              <span class="team-role">{m.role}</span>
+            </div>
+
+            <!-- Bio -->
+            <p class="team-bio">{m.bio}</p>
+
+            <!-- LinkedIn -->
+            <a
+              href={m.linkedin}
+              class="team-linkedin"
+              aria-label={`${m.name} on LinkedIn`}
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+                <path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 01-2.063-2.065 2.064 2.064 0 112.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/>
+              </svg>
+              LinkedIn
+            </a>
+
+          </div>
+        </article>
+      ))}
+    </div>
+
+    <!-- Bottom note -->
+    <div class="team-note fade-up">
+      <p>
+        Want to join the ADC team?
+        <a href="#contact" class="team-note-link">We're always looking for exceptional people.</a>
+      </p>
+    </div>
+
+  </div>
+</section>
+
+<style>
+  /* ── Section ───────────────────────────────────────────── */
+  .team {
+    padding: 120px 0 100px;
+    background: var(--white);
+  }
+
+  /* ── Header ────────────────────────────────────────────── */
+  .team-header {
+    text-align: center;
+    margin-bottom: 72px;
+  }
+  .team-header .section-label { display: flex; margin: 0 auto 20px; }
+  .team-heading {
+    font-family: var(--font-display); font-weight: 900;
+    font-size: clamp(30px, 3.5vw, 52px);
+    line-height: 1.1; color: var(--navy);
+    margin-bottom: 16px;
+  }
+  .team-heading em { color: var(--amber); font-style: italic; }
+  .team-sub {
+    font-size: 18px; color: var(--text-muted);
+    max-width: 480px; margin: 0 auto; line-height: 1.7;
+  }
+
+  /* ── Grid ──────────────────────────────────────────────── */
+  .team-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 28px;
+    margin-bottom: 56px;
+  }
+
+  /* ── Card ──────────────────────────────────────────────── */
+  .team-card {
+    border-radius: var(--radius-lg);
+    position: relative;
+    overflow: hidden;
+    /* Amber top sweep */
+    background: var(--white);
+    border: 1.5px solid var(--mist);
+    transition: border-color 0.28s var(--ease),
+                box-shadow 0.28s var(--ease),
+                transform 0.28s var(--ease);
+  }
+  .team-card::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 3px;
+    background: var(--amber);
+    transform: scaleX(0);
+    transform-origin: left;
+    transition: transform 0.35s var(--ease);
+    border-radius: 0 0 2px 2px;
+    z-index: 1;
+  }
+  .team-card:hover {
+    border-color: rgba(245,155,0,0.3);
+    box-shadow: var(--shadow-hover);
+    transform: translateY(-5px);
+  }
+  .team-card:hover::before { transform: scaleX(1); }
+
+  .team-card-inner {
+    padding: 44px 36px 36px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+  }
+
+  /* ── Avatar ────────────────────────────────────────────── */
+  .team-avatar-wrap {
+    position: relative;
+    margin-bottom: 24px;
+  }
+  .team-avatar {
+    width: 88px; height: 88px;
+    border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    font-family: var(--font-display); font-weight: 900;
+    font-size: 26px;
+    letter-spacing: -0.02em;
+    position: relative; z-index: 1;
+    transition: transform 0.35s var(--ease);
+  }
+  .team-card:hover .team-avatar { transform: scale(1.06); }
+
+  /* Amber ring that grows in on hover */
+  .team-avatar-ring {
+    position: absolute;
+    inset: -5px;
+    border-radius: 50%;
+    border: 2px solid var(--amber);
+    opacity: 0;
+    transform: scale(0.85);
+    transition: opacity 0.3s var(--ease), transform 0.3s var(--ease);
+  }
+  .team-card:hover .team-avatar-ring {
+    opacity: 1;
+    transform: scale(1);
+  }
+
+  /* ── Name & role ───────────────────────────────────────── */
+  .team-name {
+    font-family: var(--font-display); font-weight: 800;
+    font-size: 20px; color: var(--navy);
+    margin-bottom: 10px;
+  }
+  .team-role-wrap { margin-bottom: 18px; }
+  .team-role {
+    display: inline-block;
+    background: rgba(245,155,0,0.1);
+    color: var(--amber);
+    font-size: 11px; font-weight: 700;
+    letter-spacing: 0.1em; text-transform: uppercase;
+    padding: 4px 12px;
+    border-radius: var(--radius-pill);
+    border: 1px solid rgba(245,155,0,0.25);
+  }
+
+  /* ── Bio ───────────────────────────────────────────────── */
+  .team-bio {
+    font-size: 14px; color: var(--text-muted);
+    line-height: 1.75; margin-bottom: 28px;
+    flex: 1;
+  }
+
+  /* ── LinkedIn ──────────────────────────────────────────── */
+  .team-linkedin {
+    display: inline-flex; align-items: center; gap: 7px;
+    font-size: 13px; font-weight: 600;
+    color: var(--navy);
+    border: 1.5px solid var(--mist);
+    border-radius: var(--radius-pill);
+    padding: 8px 18px;
+    transition: background 0.22s var(--ease),
+                border-color 0.22s var(--ease),
+                color 0.22s var(--ease);
+  }
+  .team-linkedin svg { width: 14px; height: 14px; flex-shrink: 0; }
+  .team-linkedin:hover {
+    background: #0A66C2;
+    border-color: #0A66C2;
+    color: var(--white);
+  }
+
+  /* ── Bottom note ───────────────────────────────────────── */
+  .team-note {
+    text-align: center;
+    font-size: 15px; color: var(--text-muted);
+  }
+  .team-note-link {
+    color: var(--amber); font-weight: 600;
+    transition: opacity 0.2s;
+  }
+  .team-note-link:hover { opacity: 0.75; }
+
+  /* ── Responsive ────────────────────────────────────────── */
+  @media (max-width: 1024px) {
+    .team-grid { grid-template-columns: repeat(2, 1fr); }
+  }
+  @media (max-width: 640px) {
+    .team { padding: 80px 0 60px; }
+    .team-grid { grid-template-columns: 1fr; max-width: 400px; margin-left: auto; margin-right: auto; }
+    .team-card-inner { padding: 36px 28px 28px; }
+  }
+</style>

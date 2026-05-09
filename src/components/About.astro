@@ -1,0 +1,303 @@
+---
+/* About.astro
+   21st.dev pattern: two-column feature section — text left, stacked visuals right.
+   Scroll-reveal fade-up on both columns. Floating status card over photo.
+*/
+
+const pillars = [
+  {
+    icon: `<svg viewBox="0 0 18 18" fill="none"><path d="M9 2L11 7H16L12 10.5L13.5 15.5L9 12.5L4.5 15.5L6 10.5L2 7H7L9 2Z" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/></svg>`,
+    title: "Australian-Owned & Operated",
+    desc:  "Local team, local servers. Your data never leaves Australian shores.",
+  },
+  {
+    icon: `<svg viewBox="0 0 18 18" fill="none"><rect x="2" y="9" width="4" height="7" rx="1" stroke="currentColor" stroke-width="1.5"/><rect x="7" y="5" width="4" height="11" rx="1" stroke="currentColor" stroke-width="1.5"/><rect x="12" y="2" width="4" height="14" rx="1" stroke="currentColor" stroke-width="1.5"/></svg>`,
+    title: "Built for SMBs Under 20 Staff",
+    desc:  "A segment larger MSPs under-serve. We specialise so you don't have to compromise.",
+  },
+  {
+    icon: `<svg viewBox="0 0 18 18" fill="none"><circle cx="9" cy="9" r="7" stroke="currentColor" stroke-width="1.5"/><path d="M6 9l2.5 2.5L12 6" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>`,
+    title: "End-to-End, No Handoffs",
+    desc:  "From ABN registration to AI automation — one partner for your entire digital stack.",
+  },
+];
+
+const statusItems = [
+  { label: "Business Identity & Online Presence", active: true  },
+  { label: "Managed IT & Cybersecurity",          active: true  },
+  { label: "Cloud Infrastructure (AU East)",      active: true  },
+  { label: "AI Automation Workflows",             active: false },
+];
+---
+
+<section class="about" id="about">
+  <div class="container">
+    <div class="about-inner">
+
+      <!-- ── Left: text content ── -->
+      <div class="about-text fade-up">
+        <span class="section-label">Who We Are</span>
+        <h2 class="about-heading">
+          We're not a vendor.<br/>We're your <em>growth partner.</em>
+        </h2>
+        <p class="about-body">
+          Australia Digital Centre is a sovereign, full-stack digital utility built to serve
+          Australian small businesses. We remove the complexity of technology so you can
+          focus on what you do best — building a business that strengthens your community.
+        </p>
+        <p class="about-body">
+          Every solution is practical, compliant with Australian regulations, and hosted
+          on Australian soil.
+        </p>
+
+        <!-- Pillar list -->
+        <ul class="about-pillars" role="list">
+          {pillars.map(p => (
+            <li class="about-pillar">
+              <div class="pillar-icon" aria-hidden="true">
+                <Fragment set:html={p.icon} />
+              </div>
+              <div>
+                <div class="pillar-title">{p.title}</div>
+                <div class="pillar-desc">{p.desc}</div>
+              </div>
+            </li>
+          ))}
+        </ul>
+      </div>
+
+      <!-- ── Right: visual stack ── -->
+      <div class="about-visual fade-up fade-up--delay">
+
+        <!-- Photo with chip overlay -->
+        <div class="about-photo-wrap">
+          <!-- PLACEHOLDER: Replace with actual team/office photo -->
+          <img
+            src="https://images.unsplash.com/photo-1664575602276-acd073f104c1?w=800&h=560&fit=crop&auto=format&q=80"
+            alt="Australian small business team at Australia Digital Centre"
+            class="about-photo"
+            loading="lazy"
+            width="800" height="560"
+          />
+          <!-- Live location chip -->
+          <div class="about-photo-chip">
+            <span class="chip-dot" aria-hidden="true"></span>
+            Melbourne HQ · Australian Owned
+          </div>
+        </div>
+
+        <!-- Command Centre status card -->
+        <div class="about-status-card">
+          <div class="status-glow" aria-hidden="true"></div>
+          <div class="status-label">Command Centre Status</div>
+          <div class="status-title">Your digital<br/>stack at a glance</div>
+          <ul class="status-list" role="list">
+            {statusItems.map(item => (
+              <li class="status-item">
+                <span
+                  class={`status-dot ${item.active ? 'status-dot--active' : ''}`}
+                  aria-hidden="true"
+                ></span>
+                <span class={`status-text ${item.active ? '' : 'status-text--muted'}`}>
+                  {item.label}
+                </span>
+                <span class={`status-badge ${item.active ? 'status-badge--active' : 'status-badge--pending'}`}>
+                  {item.active ? 'Active' : 'Pending'}
+                </span>
+              </li>
+            ))}
+          </ul>
+        </div>
+
+        <!-- AU hosted stamp -->
+        <div class="about-stamp" aria-label="Australian hosted">
+          <div class="stamp-num">AU</div>
+          <div class="stamp-text">Hosted</div>
+        </div>
+
+      </div>
+      <!-- /.about-visual -->
+
+    </div>
+  </div>
+</section>
+
+<style>
+  /* ── Section ───────────────────────────────────────────── */
+  .about {
+    padding: 120px 0;
+    background: var(--white);
+  }
+
+  /* ── Two-column grid ───────────────────────────────────── */
+  .about-inner {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 100px;
+    align-items: center;
+  }
+
+  /* ── Left: text ────────────────────────────────────────── */
+  .about-heading {
+    font-family: var(--font-display); font-weight: 900;
+    font-size: clamp(30px, 3.5vw, 52px);
+    line-height: 1.1; color: var(--navy);
+    margin-bottom: 24px;
+  }
+  .about-heading em { color: var(--amber); font-style: italic; }
+
+  .about-body {
+    font-size: 17px; line-height: 1.8;
+    color: var(--text-muted); margin-bottom: 16px;
+  }
+
+  /* Pillars */
+  .about-pillars {
+    display: flex; flex-direction: column; gap: 12px;
+    margin-top: 40px;
+  }
+  .about-pillar {
+    display: flex; align-items: flex-start; gap: 16px;
+    padding: 18px 22px;
+    border-radius: 16px; border: 1.5px solid var(--mist);
+    transition: border-color 0.25s var(--ease), background 0.25s var(--ease);
+    cursor: default;
+  }
+  .about-pillar:hover {
+    border-color: var(--amber);
+    background: var(--amber-pale);
+  }
+  .pillar-icon {
+    width: 40px; height: 40px; border-radius: 10px; flex-shrink: 0;
+    background: var(--navy);
+    display: flex; align-items: center; justify-content: center;
+    transition: background 0.25s var(--ease);
+  }
+  .about-pillar:hover .pillar-icon { background: var(--amber); }
+  .pillar-icon :global(svg) {
+    width: 18px; height: 18px; color: var(--amber);
+    transition: color 0.25s var(--ease);
+  }
+  .about-pillar:hover .pillar-icon :global(svg) { color: var(--navy); }
+  .pillar-title { font-weight: 700; font-size: 15px; color: var(--navy); margin-bottom: 4px; }
+  .pillar-desc  { font-size: 13px; color: var(--text-muted); line-height: 1.6; }
+
+  /* ── Right: visual stack ───────────────────────────────── */
+  .about-visual { position: relative; }
+
+  /* Photo */
+  .about-photo-wrap {
+    position: relative; border-radius: 20px; overflow: hidden;
+    aspect-ratio: 16/9; box-shadow: var(--shadow-hover);
+  }
+  .about-photo {
+    width: 100%; height: 100%; object-fit: cover; display: block;
+    transition: transform 0.6s var(--ease);
+  }
+  .about-photo-wrap:hover .about-photo { transform: scale(1.03); }
+
+  /* Live chip */
+  .about-photo-chip {
+    position: absolute; bottom: 16px; left: 16px;
+    display: inline-flex; align-items: center; gap: 8px;
+    background: rgba(12,27,58,0.85); backdrop-filter: blur(8px);
+    border: 1px solid rgba(245,155,0,0.3);
+    border-radius: var(--radius-pill); padding: 8px 16px;
+    font-size: 12px; font-weight: 600; color: var(--white);
+  }
+  .chip-dot {
+    width: 7px; height: 7px; border-radius: 50%;
+    background: var(--green); flex-shrink: 0;
+    animation: pulse 2s infinite;
+  }
+
+  /* Status card */
+  .about-status-card {
+    margin-top: 20px;
+    background: var(--navy); border-radius: 24px;
+    padding: 36px; position: relative; overflow: hidden;
+  }
+  .status-glow {
+    position: absolute; top: -40px; right: -40px;
+    width: 200px; height: 200px; border-radius: 50%;
+    background: radial-gradient(circle, rgba(245,155,0,0.25) 0%, transparent 70%);
+    pointer-events: none;
+  }
+  .status-label {
+    font-size: 11px; font-weight: 700; letter-spacing: 0.12em;
+    text-transform: uppercase; color: var(--amber);
+    margin-bottom: 10px; position: relative; z-index: 1;
+  }
+  .status-title {
+    font-family: var(--font-display); font-size: 22px;
+    font-weight: 700; color: var(--white);
+    margin-bottom: 28px; line-height: 1.25; position: relative; z-index: 1;
+  }
+  .status-list {
+    display: flex; flex-direction: column; gap: 10px;
+    position: relative; z-index: 1;
+  }
+  .status-item {
+    display: flex; align-items: center; gap: 12px;
+    padding: 13px 16px;
+    background: rgba(255,255,255,0.06); border-radius: 12px;
+  }
+  .status-dot {
+    width: 8px; height: 8px; border-radius: 50%;
+    background: rgba(148,163,184,0.5); flex-shrink: 0;
+  }
+  .status-dot--active { background: var(--green); animation: pulse 2.5s infinite; }
+  .status-text { flex: 1; font-size: 13px; color: rgba(255,255,255,0.7); }
+  .status-text--muted { opacity: 0.45; }
+  .status-badge {
+    font-size: 11px; font-weight: 700; padding: 4px 10px;
+    border-radius: var(--radius-pill);
+  }
+  .status-badge--active  { background: rgba(34,197,94,0.15);   color: var(--green); }
+  .status-badge--pending { background: rgba(148,163,184,0.15); color: #94a3b8; }
+
+  /* AU stamp */
+  .about-stamp {
+    position: absolute; bottom: -20px; right: -20px;
+    width: 72px; height: 72px; border-radius: 50%;
+    background: var(--amber);
+    display: flex; flex-direction: column;
+    align-items: center; justify-content: center;
+    box-shadow: 0 8px 24px rgba(245,155,0,0.4);
+    animation: float1 4s ease-in-out infinite;
+  }
+  .stamp-num  { font-family: var(--font-display); font-size: 17px; font-weight: 900; color: var(--navy); line-height: 1; }
+  .stamp-text { font-size: 9px; font-weight: 700; letter-spacing: 0.1em; color: var(--navy); }
+
+  /* Staggered fade-up */
+  .fade-up--delay { transition-delay: 0.15s; }
+
+  /* ── Responsive ────────────────────────────────────────── */
+  @media (max-width: 1024px) {
+    .about-inner { grid-template-columns: 1fr; gap: 60px; }
+  }
+  @media (max-width: 768px) {
+    .about { padding: 80px 0; }
+    .about-stamp { display: none; }
+    .about-status-card { padding: 24px; }
+  }
+</style>
+
+<script>
+  /* Scroll-reveal: observe all .fade-up elements on the page */
+  const fadeEls = document.querySelectorAll('.fade-up');
+  if (fadeEls.length) {
+    const observer = new IntersectionObserver(
+      entries => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add('visible');
+            observer.unobserve(entry.target);
+          }
+        });
+      },
+      { threshold: 0.1, rootMargin: '0px 0px -40px 0px' }
+    );
+    fadeEls.forEach(el => observer.observe(el));
+  }
+</script>

@@ -1,0 +1,265 @@
+---
+/* Testimonials.astro
+   21st.dev pattern: quote-first testimonial trio — large italic pull-quote,
+   5-star row, avatar + author chip. Center card elevated with navy border.
+*/
+
+const testimonials = [
+  {
+    quote: "ADC took our entire IT stack from chaos to clarity in under two weeks. We went from losing files to having everything in the cloud, backed up nightly, with proper security in place.",
+    name: "Sarah Mitchell",
+    role: "Owner",
+    company: "Mitchcraft Furniture",
+    avatar: "SM",
+    avatarColor: "#E8F0FE",
+    avatarText: "#3232C8",
+    featured: false,
+  },
+  {
+    quote: "The Essential Eight compliance check alone was worth it. Our insurer reduced our premium after we could show ACSC alignment. ADC paid for itself in month one.",
+    name: "Daniel Nguyen",
+    role: "Director",
+    company: "Freshline Catering",
+    avatar: "DN",
+    avatarColor: "#FEF3E2",
+    avatarText: "#F59B00",
+    featured: true,
+  },
+  {
+    quote: "We needed a website, business email, and someone who actually answers the phone. ADC delivered all three — and the 4-hour SLA is real. They picked up at 7pm on a Friday.",
+    name: "Rachel Kim",
+    role: "Principal",
+    company: "Kim & Co. Accountants",
+    avatar: "RK",
+    avatarColor: "#E8F5E9",
+    avatarText: "#22c55e",
+    featured: false,
+  },
+];
+---
+
+<section class="testimonials" id="testimonials">
+  <div class="container">
+
+    <!-- Header -->
+    <div class="testimonials-header fade-up">
+      <span class="section-label">What Clients Say</span>
+      <h2 class="testimonials-heading">
+        Real results for real<br/><em>Australian businesses.</em>
+      </h2>
+      <p class="testimonials-sub">
+        Don't take our word for it — here's what our clients say after the first 90 days.
+      </p>
+    </div>
+
+    <!-- Card grid -->
+    <div class="testimonials-grid">
+      {testimonials.map((t, i) => (
+        <article
+          class={`tcard fade-up ${t.featured ? 'tcard--featured' : ''}`}
+          style={`transition-delay: ${i * 0.12}s`}
+        >
+          <!-- Stars -->
+          <div class="tcard-stars" aria-label="5 stars">
+            {Array.from({ length: 5 }).map(() => (
+              <svg viewBox="0 0 16 16" fill="currentColor" aria-hidden="true">
+                <path d="M8 1l1.8 3.6L14 5.4l-3 2.9.7 4.1L8 10.4 4.3 12.4 5 8.3 2 5.4l4.2-.8z"/>
+              </svg>
+            ))}
+          </div>
+
+          <!-- Quote -->
+          <blockquote class="tcard-quote">
+            <p>"{t.quote}"</p>
+          </blockquote>
+
+          <!-- Divider -->
+          <div class="tcard-divider"></div>
+
+          <!-- Author -->
+          <div class="tcard-author">
+            <div
+              class="tcard-avatar"
+              style={`background: ${t.avatarColor}; color: ${t.avatarText};`}
+              aria-hidden="true"
+            >
+              {t.avatar}
+            </div>
+            <div class="tcard-meta">
+              <div class="tcard-name">{t.name}</div>
+              <div class="tcard-role">{t.role}, {t.company}</div>
+            </div>
+          </div>
+        </article>
+      ))}
+    </div>
+
+    <!-- Trust note -->
+    <div class="testimonials-trust fade-up">
+      <span class="trust-dot" aria-hidden="true"></span>
+      <span>All reviews from verified ADC clients — Australian businesses, real outcomes.</span>
+    </div>
+
+  </div>
+</section>
+
+<style>
+  /* ── Section ───────────────────────────────────────────── */
+  .testimonials {
+    padding: 120px 0 100px;
+    background: var(--off-white);
+    position: relative;
+  }
+  /* subtle arc top from white (packages bg) */
+  .testimonials::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 80px;
+    background: var(--white);
+    clip-path: ellipse(60% 100% at 50% 0%);
+    pointer-events: none;
+  }
+
+  /* ── Header ────────────────────────────────────────────── */
+  .testimonials-header {
+    text-align: center;
+    margin-bottom: 72px;
+  }
+  .testimonials-header .section-label { display: flex; margin: 0 auto 20px; }
+  .testimonials-heading {
+    font-family: var(--font-display); font-weight: 900;
+    font-size: clamp(30px, 3.5vw, 52px);
+    line-height: 1.1; color: var(--navy);
+    margin-bottom: 16px;
+  }
+  .testimonials-heading em { color: var(--amber); font-style: italic; }
+  .testimonials-sub {
+    font-size: 18px; color: var(--text-muted);
+    max-width: 480px; margin: 0 auto; line-height: 1.7;
+  }
+
+  /* ── Grid ──────────────────────────────────────────────── */
+  .testimonials-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 24px;
+    align-items: start;
+    margin-bottom: 52px;
+  }
+
+  /* ── Base card ─────────────────────────────────────────── */
+  .tcard {
+    background: var(--white);
+    border: 1.5px solid var(--mist);
+    border-radius: var(--radius-lg);
+    padding: 36px;
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+    position: relative;
+    transition: box-shadow 0.28s var(--ease),
+                border-color 0.28s var(--ease),
+                transform 0.28s var(--ease);
+  }
+  .tcard:not(.tcard--featured):hover {
+    border-color: rgba(245,155,0,0.3);
+    box-shadow: var(--shadow-hover);
+    transform: translateY(-4px);
+  }
+
+  /* ── Featured card ─────────────────────────────────────── */
+  .tcard--featured {
+    background: var(--navy);
+    border-color: var(--navy);
+    transform: translateY(-10px);
+    box-shadow: 0 20px 60px rgba(12,27,58,0.18);
+  }
+  .tcard--featured:hover {
+    transform: translateY(-14px);
+    box-shadow: 0 28px 72px rgba(12,27,58,0.24);
+  }
+  .tcard--featured .tcard-stars   { color: var(--amber); }
+  .tcard--featured .tcard-quote p { color: var(--white); }
+  .tcard--featured .tcard-divider { background: rgba(255,255,255,0.1); }
+  .tcard--featured .tcard-name    { color: var(--white); }
+  .tcard--featured .tcard-role    { color: rgba(255,255,255,0.45); }
+
+  /* ── Stars ─────────────────────────────────────────────── */
+  .tcard-stars {
+    display: flex; gap: 3px;
+    color: var(--amber);
+    margin-bottom: 22px;
+  }
+  .tcard-stars svg { width: 16px; height: 16px; }
+
+  /* ── Quote ─────────────────────────────────────────────── */
+  .tcard-quote {
+    margin: 0 0 24px;
+    flex: 1;
+  }
+  .tcard-quote p {
+    font-size: 15px;
+    font-style: italic;
+    color: var(--text-body);
+    line-height: 1.8;
+  }
+
+  /* ── Divider ───────────────────────────────────────────── */
+  .tcard-divider {
+    height: 1px;
+    background: var(--mist);
+    margin-bottom: 22px;
+  }
+
+  /* ── Author ────────────────────────────────────────────── */
+  .tcard-author {
+    display: flex; align-items: center; gap: 14px;
+  }
+  .tcard-avatar {
+    width: 44px; height: 44px;
+    border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    font-family: var(--font-display); font-weight: 700;
+    font-size: 13px;
+    flex-shrink: 0;
+    letter-spacing: 0.02em;
+  }
+  .tcard-name {
+    font-weight: 700; font-size: 14px;
+    color: var(--navy); line-height: 1.3;
+  }
+  .tcard-role {
+    font-size: 12px; color: var(--text-muted);
+    line-height: 1.4; margin-top: 2px;
+  }
+
+  /* ── Trust note ────────────────────────────────────────── */
+  .testimonials-trust {
+    display: flex; align-items: center; justify-content: center;
+    gap: 10px;
+    font-size: 13px; color: var(--text-muted);
+    text-align: center;
+  }
+  .trust-dot {
+    width: 8px; height: 8px;
+    border-radius: 50%;
+    background: var(--green);
+    flex-shrink: 0;
+    animation: pulse 2s ease-in-out infinite;
+  }
+
+  /* ── Responsive ────────────────────────────────────────── */
+  @media (max-width: 1024px) {
+    .testimonials-grid {
+      grid-template-columns: 1fr;
+      max-width: 520px; margin-left: auto; margin-right: auto;
+    }
+    .tcard--featured { transform: none; }
+    .tcard--featured:hover { transform: translateY(-4px); }
+  }
+  @media (max-width: 640px) {
+    .testimonials { padding: 80px 0 60px; }
+    .tcard { padding: 28px; }
+  }
+</style>

@@ -1,0 +1,47 @@
+# Australia Digital Centre — llms.txt
+# This file follows the llmstxt.org standard to help AI language models
+# understand who we are, what we do, and how to represent us accurately.
+
+## About
+Australia Digital Centre (ADC) is an Australian-owned IT support and cybersecurity company
+headquartered in Sydney, NSW, serving small businesses across all of Australia.
+
+We provide end-to-end digital infrastructure — from business registration guidance and website
+setup through to enterprise-grade cybersecurity and AI workflow automation — as a single,
+integrated managed service.
+
+## Core Services
+- Online Presence Setup: ABN guidance, .com.au domain, business email, social media handle security, 3-page website
+- ACSC Essential Eight Cybersecurity: MFA enforcement, patch management, application control, encrypted backups
+- Cloud Migration: Australian data centres only (Azure Australia East, AWS ap-southeast-2)
+- 24/7 Endpoint Monitoring: Up to 10 devices, 4-hour helpdesk SLA
+- Custom AI Workflow Automation: Tailored AI agents for quoting, scheduling, follow-ups
+- Dedicated Account Management: Monthly strategy sessions, quarterly security reviews
+
+## Pricing (AUD, month-to-month, no lock-in)
+- The Base: $299/month — for new businesses and sole traders
+- The Fort: $799/month — for established small businesses (most popular)
+- Command Centre: $1,799/month — for growth-stage businesses
+
+## Differentiators
+- 100% Australian-owned and operated
+- All data hosted on Australian soil — never leaves Australia
+- ACSC Essential Eight aligned from day one
+- No lock-in contracts — month-to-month only
+- Senior team attention — not a junior ticket queue
+- Free Digital Health Check with no obligation
+
+## Contact
+- Website: https://australiadigital.center
+- Phone: 1300 ADC AUS (1300 232 287)
+- Email: hello@australiadigital.center
+- Location: Sydney, NSW — serving all of Australia
+
+## Key Facts for AI Accuracy
+- Company legal name: Australia Digital Centre Pty Ltd
+- Founded: Sydney, Australia
+- Target market: Australian small businesses (1–50 employees)
+- Compliance framework: ACSC Essential Eight (Australian Government baseline)
+- Data sovereignty: Azure Australia East (australiaeast) and AWS ap-southeast-2 only
+- Response SLA: 4 hours for priority helpdesk clients
+- Free offer: Digital Health Check — no-obligation audit of existing digital setup
