@@ -1,4 +1,0 @@
-User-agent: *
-Allow: /
-
-Sitemap: https://australiandigitalcentre.vercel.app/sitemap_v2.xml
